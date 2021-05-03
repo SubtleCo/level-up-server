@@ -1,0 +1,11 @@
+{
+    "python.linting.pylintEnabled": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "lvlup",
+            "database": "db.sqlite3"
+        }
+    ]
+}

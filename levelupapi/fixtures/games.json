@@ -1,0 +1,20 @@
+[
+    {
+        "model": "levelupapi.game",
+        "pk": 1,
+        "fields": {
+            "game_type_id": 1,
+            "players": 4,
+            "name": "Settlers Of Catan"
+        }
+    },
+    {
+        "model": "levelupapi.game",
+        "pk": 2,
+        "fields": {
+            "game_type_id": 1,
+            "players": 4,
+            "name": "Tapestry"
+        }
+    }
+]
