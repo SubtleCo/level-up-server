@@ -1,9 +1,0 @@
-[
-    {
-        "model": "levelupapi.event",
-        "pk": 1,
-        "fields": {
-            "date": 
-        }
-    }
-]
