@@ -11,7 +11,7 @@
     },
     {
         "model": "levelupapi.event",
-        "pk": 1,
+        "pk": 2,
         "fields": {
             "date": "2021-05-07 08:58:29.564786",
             "location": "123 Cool Road",
