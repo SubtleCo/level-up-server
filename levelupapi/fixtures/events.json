@@ -1,0 +1,22 @@
+[
+    {
+        "model": "levelupapi.event",
+        "pk": 1,
+        "fields": {
+            "date": "2021-05-04 08:58:29.564786",
+            "location": "123 Cool Road",
+            "game": 1,
+            "host": 1
+        }
+    },
+    {
+        "model": "levelupapi.event",
+        "pk": 1,
+        "fields": {
+            "date": "2021-05-07 08:58:29.564786",
+            "location": "123 Cool Road",
+            "game": 2,
+            "host": 1
+        }
+    }
+]

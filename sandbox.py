@@ -1,4 +1,5 @@
+import json
 from datetime import datetime
 thing = datetime.now()
 
-print(thing)
+print(json.dumps(thing))
