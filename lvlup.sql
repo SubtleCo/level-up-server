@@ -1,5 +1,6 @@
 -- nuke DB
 
+-- delete migrations folder
 DROP TABLE IF EXISTS levelupapi_event;
 DROP TABLE IF EXISTS levelupapi_eventgamer;
 DROP TABLE IF EXISTS levelupapi_game;
