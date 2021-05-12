@@ -16,3 +16,13 @@ class Event(models.Model):
     def joined(self, value):
         self.__joined = value
 
+    @property
+    def attendee_count(self):
+        return self.__attendee_count
+
+    @attendee_count.setter
+    def attendee_count(self, value):
+        self.__attendee_count = value
+
+    
+

@@ -9,6 +9,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from levelupapi.models import Game, Event, Gamer, EventGamer
+from django.db.models import Count
 
 class Events(ViewSet):
 
@@ -40,7 +41,8 @@ class Events(ViewSet):
 
     def retrieve(self, request, pk=None):
         try: 
-            event = Event.objects.get(pk=pk)
+            events = Event.objects.annotate(attendee_count=Count('attendees'))
+            event = events.get(pk=pk)
             serializer = EventSerializer(event, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
@@ -90,7 +92,7 @@ class Events(ViewSet):
             Response -- JSON serialized list of events
         """
         gamer = Gamer.objects.get(user=request.auth.user)
-        events = Event.objects.all()
+        events = Event.objects.annotate(attendee_count=Count('attendees'))
 
         # Set the 'joined' property on every event
         for event in events:
@@ -250,4 +252,4 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = ('id', 'game', 'organizer',
-                  'description', 'date', 'time', 'joined')
+                  'description', 'date', 'time', 'joined', 'attendee_count')
