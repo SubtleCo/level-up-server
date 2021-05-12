@@ -9,7 +9,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from levelupapi.models import Game, Event, Gamer, EventGamer
-from django.db.models import Count
+from django.db.models import Count, Q
 
 class Events(ViewSet):
 
@@ -92,18 +92,16 @@ class Events(ViewSet):
             Response -- JSON serialized list of events
         """
         gamer = Gamer.objects.get(user=request.auth.user)
-        events = Event.objects.annotate(attendee_count=Count('attendees'))
 
-        # Set the 'joined' property on every event
-        for event in events:
-            event.joined = None
-
-            try:
-                EventGamer.objects.get(event=event, gamer=gamer)
-                event.joined = True
-            except EventGamer.DoesNotExist:
-                event.joined = False
-
+        # Single Database query that both counts the length of the attendees list AND counts
+        #   how many times the gamer appears in that list (1 or 0)
+        events = Event.objects.annotate(
+            attendee_count=Count('attendees'),
+            joined=Count(
+                'attendees',
+                filter=Q(attendees=gamer)
+            )
+        )
         # Support filtering by game
         game = self.request.query_params.get('gameId', None)
         if game is not None:
