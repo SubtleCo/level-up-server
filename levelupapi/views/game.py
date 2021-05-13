@@ -91,12 +91,17 @@ class Games(ViewSet):
         gamer = Gamer.objects.get(user=request.auth.user)
         # Get all the game records from the DB
         games = Game.objects.annotate(
-            event_count=Count('events')
+            event_count=Count('events'),
+            user_event_count=Count(
+                'events',
+                # In this case, the dunder is expanding the object: {Game} --> [events] >>> {event} --> {organizer}
+                filter=Q(event__organizer=gamer)
+                )
             )
-        for game in games:
-            game.user_event_count = 0
-            for event in game.events.all():
-                if (event.organizer == gamer): game.user_event_count += 1
+        # for game in games:
+        #     game.user_event_count = 0
+        #     for event in game.events.all():
+        #         if (event.organizer == gamer): game.user_event_count += 1
 
         # Support filtering games by type
         game_type = self.request.query_params.get('type', None)
