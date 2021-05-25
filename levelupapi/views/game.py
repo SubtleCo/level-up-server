@@ -34,7 +34,7 @@ class Games(ViewSet):
         try:
             game.save()
             serializer = GameSerializer(game, context={'request': request})
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         # If anything went wrong, catch the exception and send a 400 code
         except ValidationError as ex:
@@ -49,7 +49,7 @@ class Games(ViewSet):
             serializer = GameSerializer(game, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
-            return HttpResponseServerError(ex)
+            return HttpResponseServerError(ex, status=status.HTTP_404_NOT_FOUND)
 
     ################################  UPDATE  ################################
 
@@ -71,7 +71,7 @@ class Games(ViewSet):
 
     ################################  DESTROY  ################################
 
-    def destory(self, request, pk=None):
+    def destroy(self, request, pk=None):
         try:
             game = Game.objects.get(pk=pk)
             game.delete()
@@ -95,7 +95,7 @@ class Games(ViewSet):
             user_event_count=Count(
                 'events',
                 # In this case, the dunder is expanding the object: {Game} --> [events] >>> {event} --> {organizer}
-                filter=Q(event__organizer=gamer)
+                filter=Q(events__organizer=gamer)
                 )
             )
         # for game in games:
