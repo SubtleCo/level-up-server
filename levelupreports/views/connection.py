@@ -1,2 +1,3 @@
 class Connection:
-    db_path = "/Users/alexmartin/workspace/python/levelup/levelup/db.sqlite3"
+    db_path = "/Users/alexmartin/workspace/python/level-up/level-up-server/db.sqlite3"
+
